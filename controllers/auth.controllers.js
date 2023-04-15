@@ -17,7 +17,7 @@ export const login = (req, res) => {
                res.status(401).json(
                   errorMessageFormat(
                      'Authentication failed. User not found.',
-                     req.url
+                     req
                   )
                );
             } else {
@@ -28,7 +28,7 @@ export const login = (req, res) => {
                      .json(
                         errorMessageFormat(
                            'Authentication failed. Wrong password.',
-                           req.url
+                           req
                         )
                      );
                } else {
@@ -50,7 +50,7 @@ export const login = (req, res) => {
          })
          .catch((err) => {
             res.status(500).json(
-               errorMessageFormat('Something went wrong', req.url, err.message)
+               errorMessageFormat('Something went wrong', req, err.message)
             );
          });
    });
@@ -64,7 +64,7 @@ export const register = async (req, res) => {
    if (password !== confirmPassword) {
       return res
          .status(400)
-         .json(errorMessageFormat('Passwords do not match', req.url));
+         .json(errorMessageFormat('Passwords do not match', req));
    }
 
    connectDB().then(() => {
@@ -74,7 +74,7 @@ export const register = async (req, res) => {
             if (user) {
                return res
                   .status(400)
-                  .json(errorMessageFormat('User already exists', req.url));
+                  .json(errorMessageFormat('User already exists', req));
             } else {
                // create new user
                const user = new User({
@@ -98,7 +98,7 @@ export const register = async (req, res) => {
                      res.status(500).json(
                         errorMessageFormat(
                            'Something went wrong',
-                           req.url,
+                           req,
                            err.message
                         )
                      );
@@ -107,7 +107,7 @@ export const register = async (req, res) => {
          })
          .catch((err) => {
             res.status(500).json(
-               errorMessageFormat('Something went wrong', req.url, err.message)
+               errorMessageFormat('Something went wrong', req, err.message)
             );
          });
    });
@@ -120,6 +120,6 @@ export const loginRequired = (req, res, next) => {
    } else {
       return res
          .status(401)
-         .json(errorMessageFormat('Unauthorized user!', req.url));
+         .json(errorMessageFormat('Unauthorized user!', req));
    }
 };
