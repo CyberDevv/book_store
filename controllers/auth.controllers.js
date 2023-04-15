@@ -1,13 +1,54 @@
-import connectDB from '../utils/dbConnect';
-import User from '../models/user.model';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import User from '../models/user.model';
+import connectDB from '../utils/dbConnect';
 
+// loign controtller
 export const login = (req, res) => {
    const { email, password } = req.body;
 
-   res.send('login');
+   connectDB().then(() => {
+      User.findOne({
+         email,
+      })
+         .then((userDoc) => {
+            if (!userDoc) {
+               res.status(401).json({
+                  message: 'Authentication failed. User not found.',
+               });
+            } else {
+               // compare password
+               if (!userDoc.comparePassword(password, userDoc.hashPassword)) {
+                  return res.status(401).json({
+                     message: 'Authentication failed. Wrong password.',
+                  });
+               } else {
+                  return res.json({
+                     token: jwt.sign(
+                        {
+                           email: userDoc.email,
+                           name: userDoc.name,
+                           _id: userDoc.id,
+                        },
+                        process.env.JWT_SECRET,
+                        {
+                           expiresIn: '1d',
+                        }
+                     ),
+                  });
+               }
+            }
+         })
+         .catch((err) => {
+            res.status(500).json({
+               message: 'Something went wrong',
+               error: err.message,
+            });
+         });
+   });
 };
 
+// register controtller
 export const register = async (req, res) => {
    const { name, email, password, confirmPassword } = req.body;
 
@@ -60,4 +101,15 @@ export const register = async (req, res) => {
             });
          });
    });
+};
+
+// login required middleware
+export const loginRequired = (req, res, next) => {
+   if (req.user) {
+      next();
+   } else {
+      return res.status(401).json({
+         message: 'Unauthorized user!',
+      });
+   }
 };
