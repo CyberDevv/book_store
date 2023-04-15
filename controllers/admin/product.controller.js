@@ -91,3 +91,25 @@ export const deleteProduct = (req, res) => {
          });
    });
 };
+
+// get one product
+export const getOneProduct = (req, res) => {
+   connectDB().then(() => {
+      Product.findById(req.query.id, { __v: 0 })
+         .then((productDoc) => {
+            // check if product exists
+            if (!productDoc) {
+               res.status(404).json(
+                  errorMessageFormat('Product not found', req)
+               );
+            }
+
+            res.status(200).json({
+               data: productDoc,
+            });
+         })
+         .catch((error) => {
+            errorMessageFormat('Error getting product', req, error);
+         });
+   });
+};
