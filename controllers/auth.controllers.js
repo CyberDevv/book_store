@@ -37,6 +37,7 @@ export const login = (req, res) => {
                         {
                            email: userDoc.email,
                            name: userDoc.name,
+                           role: userDoc.role,
                            _id: userDoc.id,
                         },
                         process.env.JWT_SECRET,
@@ -121,5 +122,18 @@ export const loginRequired = (req, res, next) => {
       return res
          .status(401)
          .json(errorMessageFormat('Unauthorized user!', req));
+   }
+};
+
+// admin required middleware
+export const adminRequired = (req, res, next) => {
+   if (req.user && req.user.role === 'admin') {
+      next();
+   } else {
+      return res
+         .status(401)
+         .json(
+            errorMessageFormat('Unauthorized user, admin access required.', req)
+         );
    }
 };

@@ -3,7 +3,7 @@ import connectDB from '../../utils/dbConnect';
 import { errorMessageFormat } from '../../utils/errorMessageFormat';
 
 // Add product
-export const addProduct = async (req, res) => {
+export const addProduct = (req, res) => {
    const { productName, description, price, image, category, quantity } =
       req.body;
 
@@ -28,6 +28,43 @@ export const addProduct = async (req, res) => {
          })
          .catch((error) => {
             errorMessageFormat('Error creating product', req, error);
+         });
+   });
+};
+
+// Edit product
+export const editProduct = (req, res) => {
+   const { productName, description, price, image, category, quantity } =
+      req.body;
+
+   connectDB().then(async () => {
+      await Product.findOneAndUpdate(
+         { _id: req.query.id },
+         {
+            productName,
+            description,
+            price,
+            image,
+            category,
+            quantity,
+         },
+         { new: true }
+      )
+         .then((productDoc) => {
+            // check if product exists
+            if (!productDoc) {
+               return res.status(404).json({
+                  message: 'Product not found',
+               });
+            }
+
+            res.status(200).json({
+               message: 'Product updated successfully',
+               data: productDoc,
+            });
+         })
+         .catch((error) => {
+            errorMessageFormat('Error updating product', req, error);
          });
    });
 };
