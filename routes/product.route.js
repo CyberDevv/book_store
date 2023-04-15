@@ -1,6 +1,7 @@
 import {
    addProduct,
    editProduct,
+   deleteProduct
 } from '../controllers/admin/product.controller';
 import { loginRequired, adminRequired } from '../controllers/auth.controllers';
 
@@ -17,6 +18,13 @@ const routes = (app, prefix) => {
       loginRequired,
       adminRequired,
       editProduct
+   );
+
+   // delete product route
+   app.route(`${prefix}/deleteProduct`).delete(
+      loginRequired,
+      adminRequired,
+      deleteProduct
    );
 };
 

@@ -37,8 +37,8 @@ export const editProduct = (req, res) => {
    const { productName, description, price, image, category, quantity } =
       req.body;
 
-   connectDB().then(async () => {
-      await Product.findOneAndUpdate(
+   connectDB().then(() => {
+      Product.findOneAndUpdate(
          { _id: req.query.id },
          {
             productName,
@@ -65,6 +65,29 @@ export const editProduct = (req, res) => {
          })
          .catch((error) => {
             errorMessageFormat('Error updating product', req, error);
+         });
+   });
+};
+
+// delete product
+export const deleteProduct = (req, res) => {
+   connectDB().then(() => {
+      Product.findOneAndDelete({ _id: req.query.id })
+         .then((productDoc) => {
+            // check if product exists
+            if (!productDoc) {
+               return res.status(404).json({
+                  message: 'Product not found',
+               });
+            }
+
+            res.status(200).json({
+               message: 'Product deleted successfully',
+               data: productDoc,
+            });
+         })
+         .catch((error) => {
+            errorMessageFormat('Error deleting product', req);
          });
    });
 };
