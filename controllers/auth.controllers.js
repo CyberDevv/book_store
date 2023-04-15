@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
 import connectDB from '../utils/dbConnect';
+import { errorMessageFormat } from '../utils/errorMessageFormat';
 
 // loign controtller
 export const login = (req, res) => {
@@ -13,15 +14,23 @@ export const login = (req, res) => {
       })
          .then((userDoc) => {
             if (!userDoc) {
-               res.status(401).json({
-                  message: 'Authentication failed. User not found.',
-               });
+               res.status(401).json(
+                  errorMessageFormat(
+                     'Authentication failed. User not found.',
+                     req.url
+                  )
+               );
             } else {
                // compare password
                if (!userDoc.comparePassword(password, userDoc.hashPassword)) {
-                  return res.status(401).json({
-                     message: 'Authentication failed. Wrong password.',
-                  });
+                  return res
+                     .status(401)
+                     .json(
+                        errorMessageFormat(
+                           'Authentication failed. Wrong password.',
+                           req.url
+                        )
+                     );
                } else {
                   return res.json({
                      token: jwt.sign(
@@ -40,10 +49,9 @@ export const login = (req, res) => {
             }
          })
          .catch((err) => {
-            res.status(500).json({
-               message: 'Something went wrong',
-               error: err.message,
-            });
+            res.status(500).json(
+               errorMessageFormat('Something went wrong', req.url, err.message)
+            );
          });
    });
 };
@@ -54,9 +62,9 @@ export const register = async (req, res) => {
 
    // compare passwords
    if (password !== confirmPassword) {
-      return res.status(400).json({
-         message: 'Passwords do not match',
-      });
+      return res
+         .status(400)
+         .json(errorMessageFormat('Passwords do not match', req.url));
    }
 
    connectDB().then(() => {
@@ -64,9 +72,9 @@ export const register = async (req, res) => {
          .then((user) => {
             // check if user exists
             if (user) {
-               return res.status(400).json({
-                  message: 'User already exists',
-               });
+               return res
+                  .status(400)
+                  .json(errorMessageFormat('User already exists', req.url));
             } else {
                // create new user
                const user = new User({
@@ -87,18 +95,20 @@ export const register = async (req, res) => {
                      });
                   })
                   .catch((err) => {
-                     res.status(500).json({
-                        message: 'Something went wrong',
-                        error: err.message,
-                     });
+                     res.status(500).json(
+                        errorMessageFormat(
+                           'Something went wrong',
+                           req.url,
+                           err.message
+                        )
+                     );
                   });
             }
          })
          .catch((err) => {
-            res.status(500).json({
-               message: 'Something went wrong',
-               error: err.message,
-            });
+            res.status(500).json(
+               errorMessageFormat('Something went wrong', req.url, err.message)
+            );
          });
    });
 };
@@ -108,8 +118,8 @@ export const loginRequired = (req, res, next) => {
    if (req.user) {
       next();
    } else {
-      return res.status(401).json({
-         message: 'Unauthorized user!',
-      });
+      return res
+         .status(401)
+         .json(errorMessageFormat('Unauthorized user!', req.url));
    }
 };
