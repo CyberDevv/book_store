@@ -6,6 +6,7 @@ import { error404 } from './controllers/error404.controller';
 import authRoutes from './routes/auth.routes';
 import productRoutes from './routes/product.route';
 import jwt from 'jsonwebtoken';
+import connectDB from './utils/dbConnect';
 
 dotenv.config();
 const app = express();
@@ -44,6 +45,17 @@ authRoutes(app, '/auth');
 productRoutes(app, '/api/v1/product');
 app.use(error404);
 
-app.listen(process.env.PORT, () => {
-   console.log(`Server is running on port ${process.env.PORT}`);
-});
+// server setup
+const start = async () => {
+   try {
+      await connectDB(process.env.MONGODB_URI);
+      app.listen(
+         process.env.PORT,
+         console.log(`Server is running on port ${process.env.PORT}`)
+      );
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+start();
