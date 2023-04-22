@@ -4,6 +4,7 @@ import {
    deleteProduct,
    getOneProduct,
    getAllProducts,
+   getAllProductsUser,
 } from '../controllers/admin/product.controller';
 import { loginRequired, adminRequired } from '../controllers/auth.controllers';
 
@@ -15,12 +16,14 @@ const routes = (app, prefix) => {
       .delete(loginRequired, adminRequired, deleteProduct)
       .get(loginRequired, adminRequired, getOneProduct);
 
-   // get all products route
-   app.route(`${prefix}/getAllproducts`).get(
+   // get all products route (admin)
+   app.route(`${prefix}/admin/getAllproducts`).get(
       loginRequired,
       adminRequired,
       getAllProducts
    );
+
+   app.route(`${prefix}/getAllproducts`).get(getAllProductsUser);
 };
 
 export default routes;
