@@ -4,8 +4,11 @@ import {
    deleteProduct,
    getOneProduct,
    getAllProducts,
-   getAllProductsUser,
 } from '../controllers/admin/product.controller';
+import {
+   getAllProductsUser,
+   addToCart,
+} from '../controllers/user/product.controller';
 import { loginRequired, adminRequired } from '../controllers/auth.controllers';
 
 const routes = (app, prefix) => {
@@ -23,7 +26,11 @@ const routes = (app, prefix) => {
       getAllProducts
    );
 
+   // get all products route (user)
    app.route(`${prefix}/getAllproducts`).get(getAllProductsUser);
+
+   // add product to cart route
+   app.route(`${prefix}/addToCart`).post(addToCart);
 };
 
 export default routes;

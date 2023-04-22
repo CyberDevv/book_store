@@ -103,7 +103,7 @@ export const getOneProduct = (req, res) => {
       });
 };
 
-// get all products for admin
+// get all products
 export const getAllProducts = (req, res) => {
    Product.find(
       {
@@ -111,19 +111,6 @@ export const getAllProducts = (req, res) => {
       },
       { __v: 0, userId: 0 }
    )
-      .then((productDoc) => {
-         res.status(200).json({
-            data: productDoc,
-         });
-      })
-      .catch((error) => {
-         errorMessageFormat('Error getting products', req, error);
-      });
-};
-
-// get all products for users
-export const getAllProductsUser = (req, res) => {
-   Product.find({}, { __v: 0 })
       .then((productDoc) => {
          res.status(200).json({
             data: productDoc,
