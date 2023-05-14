@@ -1,5 +1,5 @@
-import { errorMessageFormat } from '../utils/errorMessageFormat';
+import { NotFoundError } from '../errors';
 
 export const error404 = (req, res) => {
-   res.status(404).json(errorMessageFormat('Not Found', req));
+   throw new NotFoundError('Route not found');
 };

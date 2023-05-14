@@ -2,6 +2,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import express from 'express';
+import helmet from 'helmet';
+import xss from 'xss-clean';
 import { error404 } from './controllers/error404.controller';
 import {
    adminRequired,
@@ -22,8 +24,10 @@ import('express-async-errors');
 dotenv.config();
 const app = express();
 
-// cors setup
+// setups
 app.use(cors());
+app.use(helmet());
+app.use(xss());
 
 // bodyparser setup
 app.use(bodyParser.urlencoded({ extended: true }));
