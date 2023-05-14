@@ -7,7 +7,7 @@
 
 -  [x] `/books`: GET endpoint to retrieve a list of all available books.
 -  [x] `/books/:id`: GET endpoint to retrieve details of a specific book.
--  [ ] `/cart`: GET endpoint to retrieve the current shopping cart of a user.
+-  [x] `/users/cart`: GET endpoint to retrieve the current shopping cart of a user.
 -  [x] `/users/cart`: POST endpoint to add a book to a user's shopping cart.
 -  [ ] `/cart/checkout`: POST endpoint to complete a purchase and create a new order.
 -  [ ] `/orders`: GET endpoint to retrieve a list of a user's orders.
