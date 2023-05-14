@@ -22,9 +22,9 @@ const UserSchema = new mongoose.Schema({
    cart: {
       items: [
          {
-            productId: {
+            bookId: {
                type: mongoose.Schema.Types.ObjectId,
-               ref: 'Product',
+               ref: 'Book',
                required: true,
             },
             quantity: {
@@ -45,17 +45,17 @@ UserSchema.methods.comparePassword = (password, hashPassword) => {
    return bcrypt.compareSync(password, hashPassword);
 };
 
-UserSchema.methods.addToCart = function (product, newQuantity = 1) {
-   const cartProductIndex = this.cart.items.findIndex((cp) => {
-      return cp.productId.toString() === product._id.toString();
+UserSchema.methods.addToCart = function (book, newQuantity = 1) {
+   const cartBookIndex = this.cart.items.findIndex((cp) => {
+      return cp.bookId.toString() === book._id.toString();
    });
    const updatedCartItems = [...this.cart.items];
 
-   if (cartProductIndex >= 0) {
-      updatedCartItems[cartProductIndex].quantity = newQuantity;
+   if (cartBookIndex >= 0) {
+      updatedCartItems[cartBookIndex].quantity = newQuantity;
    } else {
       updatedCartItems.push({
-         productId: product._id,
+         bookId: book._id,
          quantity: newQuantity,
       });
    }
@@ -66,9 +66,9 @@ UserSchema.methods.addToCart = function (product, newQuantity = 1) {
    return this.save();
 };
 
-UserSchema.methods.removeFromCart = function (productId) {
+UserSchema.methods.removeFromCart = function (bookId) {
    const updatedCartItems = this.cart.items.filter((item) => {
-      return item.productId.toString() !== productId.toString();
+      return item.bookId.toString() !== bookId.toString();
    });
    this.cart.items = updatedCartItems;
    return this.save();
