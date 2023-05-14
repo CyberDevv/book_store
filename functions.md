@@ -6,7 +6,7 @@
 2. Customer/User endpoints:
 
 -  [x] `/books`: GET endpoint to retrieve a list of all available books.
--  [ ] `/books/:id`: GET endpoint to retrieve details of a specific book.
+-  [x] `/books/:id`: GET endpoint to retrieve details of a specific book.
 -  [ ] `/cart`: GET endpoint to retrieve the current shopping cart of a user.
 -  [x] `/users/cart`: POST endpoint to add a book to a user's shopping cart.
 -  [ ] `/cart/checkout`: POST endpoint to complete a purchase and create a new order.

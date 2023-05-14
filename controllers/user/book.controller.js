@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import { StatusCodes } from 'http-status-codes';
 import Book from '../../models/book.model';
+import { NotFoundError } from '../../errors';
 
 // get all books
 export const getAllBooksUser = asyncHandler(async (req, res) => {
@@ -21,5 +22,16 @@ export const getAllBooksUser = asyncHandler(async (req, res) => {
    res.status(StatusCodes.OK).json({
       data: book,
       count: count,
+   });
+});
+
+// get book by id
+export const getBookById = asyncHandler(async (req, res) => {
+   const book = await Book.findById(req.params.id, { __v: 0 });
+
+   if (!book) throw new NotFoundError('Book not found');
+
+   res.status(StatusCodes.OK).json({
+      data: book,
    });
 });
