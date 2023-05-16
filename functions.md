@@ -22,4 +22,4 @@
 -  [x] `/admin/books/:id`: DELETE endpoint to remove a book from the inventory.
 -  [x] `/admin/orders`: GET endpoint to retrieve a list of all orders.
 -  [x] `/admin/orders/:id`: GET endpoint to retrieve details of a specific order.
--  [ ] `/admin/orders/edit/:id`: PUT endpoint to update the status of an existing order.
+-  [x] `/admin/orders/:id`: PATCH endpoint to update the status of an existing order.

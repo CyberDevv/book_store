@@ -25,6 +25,11 @@ const orderSchema = new mongoose.Schema({
          ref: 'User',
       },
    },
+   status: {
+      type: String,
+      default: 'pending',
+      enum: ['pending', 'completed', 'cancelled'],
+   },
    createdOn: {
       type: Date,
       default: Date.now,
