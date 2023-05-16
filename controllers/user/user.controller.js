@@ -19,7 +19,7 @@ export const addToCart = asyncHandler(async (req, res) => {
 
    logger.info(`Book added to cart by user ${req.user._id}`);
 
-   res.status(StatusCodes.OK).json({
+   res.status(StatusCodes.CREATED).json({
       message: 'Book added to cart',
    });
 });
@@ -35,9 +35,6 @@ export const getCart = asyncHandler(async (req, res) => {
 
 // remove cart
 export const removeCart = asyncHandler(async (req, res) => {
-   console.log(req.params.id);
-   console.log(req.user._id);
-
    const user = await User.findById(req.user._id);
 
    await user.removeFromCart(req.params.id);
@@ -62,7 +59,7 @@ export const checkout = asyncHandler(async (req, res) => {
 
    // payment gateway
 
-   const order = await new Order({
+   await new Order({
       user: {
          name: req.user.name,
          userId: req.user._id,

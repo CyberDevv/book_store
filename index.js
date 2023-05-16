@@ -15,7 +15,7 @@ import {
 import booksRoutes from './routes/_/books.routes';
 import usersRoutes from './routes/_/users.routes';
 import adminBooksRoutes from './routes/admin/books.routes';
-import adminUsersRoutes from './routes/admin/users.routes';
+import adminOrdersRoutes from './routes/admin/orders.routes';
 import authRoutes from './routes/auth.routes';
 import connectDB from './utils/dbConnect';
 import logger from './utils/winston';
@@ -44,7 +44,7 @@ app.use('/auth', authRoutes);
 app.use('/api/v1/books', loginRequired, booksRoutes);
 app.use('/api/v1/users', loginRequired, usersRoutes);
 app.use('/api/v1/admin/books', adminRequired, loginRequired, adminBooksRoutes);
-app.use('/api/v1/admin/users', adminRequired, loginRequired, adminUsersRoutes);
+app.use('/api/v1/admin/orders', adminRequired, loginRequired, adminOrdersRoutes);
 app.use(error404);
 
 // error handler

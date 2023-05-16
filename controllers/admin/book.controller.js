@@ -59,7 +59,7 @@ export const deleteBook = asyncHandler(async (req, res) => {
 
    logger.info(`User ${req.user._id} deleted a book => ${book.bookName}`);
 
-   res.status(200).json({
+   res.status(StatusCodes.Ok).json({
       message: 'Book deleted successfully',
    });
 });
@@ -70,7 +70,7 @@ export const getOneBook = asyncHandler(async (req, res) => {
 
    if (!book) throw new NotFoundError('Book not found');
 
-   res.status(200).json({
+   res.status(statusCodes.Ok).json({
       data: book,
    });
 });
@@ -84,7 +84,7 @@ export const getAllBooks = asyncHandler(async (req, res) => {
       { __v: 0, userId: 0 }
    );
 
-   res.status(200).json({
+   res.status(statusCodes.Ok).json({
       data: book,
    });
 });
