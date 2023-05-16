@@ -31,3 +31,19 @@ export const getCart = asyncHandler(async (req, res) => {
       data: user.cart.items,
    });
 });
+
+// remove cart
+export const removeCart = asyncHandler(async (req, res) => {
+   console.log(req.params.id)
+   console.log(req.user._id)
+   
+   const user = await User.findById(req.user._id);
+
+   await user.removeFromCart(req.params.id);
+
+   logger.info(`Book removed from cart by user ${req.user._id}`);
+
+   res.status(StatusCodes.OK).json({  
+      message: 'Book removed from cart',
+   });
+})

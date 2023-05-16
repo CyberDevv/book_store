@@ -9,11 +9,9 @@
 -  [x] `/books/:id`: GET endpoint to retrieve details of a specific book.
 -  [x] `/users/cart`: GET endpoint to retrieve the current shopping cart of a user.
 -  [x] `/users/cart`: POST endpoint to add a book to a user's shopping cart.
+- [x] `/users/cart/:id`: DELETE endpoint to delete a specific cart item.
 -  [ ] `/cart/checkout`: POST endpoint to complete a purchase and create a new order.
 -  [ ] `/orders`: GET endpoint to retrieve a list of a user's orders.
--  [ ] `/reviews`: POST endpoint to submit a new book review.
--  [ ] `/wishlist`: GET endpoint to retrieve a user's wish list.
--  [ ] `/contact`: POST endpoint to send a message to the website administrator.
 
 3. Admin endpoints:
 
@@ -22,9 +20,6 @@
 -  [x] `/admin/books/:id`: GET endpoint to retrieve details of a specific book.
 -  [x] `/admin/books/:id`: PATCH endpoint to edit an existing book in the inventory.
 -  [x] `/admin/books/:id`: DELETE endpoint to remove a book from the inventory.
--  [ ] `/admin/users`: GET endpoint to retrieve a list of all users.
--  [ ] `/admin/users/:id`: GET endpoint to retrieve details of a specific user.
--  [ ] `/admin/users/edit/:id`: PUT endpoint to edit an existing user's account.
 -  [ ] `/admin/orders`: GET endpoint to retrieve a list of all orders.
 -  [ ] `/admin/orders/:id`: GET endpoint to retrieve details of a specific order.
 -  [ ] `/admin/orders/edit/:id`: PUT endpoint to update the status of an existing order.
