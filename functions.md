@@ -11,7 +11,7 @@
 -  [x] `/users/cart`: POST endpoint to add a book to a user's shopping cart.
 - [x] `/users/cart/:id`: DELETE endpoint to delete a specific cart item.
 -  [x] `/users/cart/checkout`: POST endpoint to complete a purchase and create a new order.
--  [ ] `/orders`: GET endpoint to retrieve a list of a user's orders.
+-  [x] `/users/orders`: GET endpoint to retrieve a list of a user's orders.
 
 3. Admin endpoints:
 

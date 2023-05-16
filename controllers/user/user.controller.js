@@ -78,3 +78,12 @@ export const checkout = asyncHandler(async (req, res) => {
       message: 'Cart checked out',
    });
 });
+
+// get orders
+export const getOrders = asyncHandler(async (req, res) => {
+   const orders = await Order.find({ 'user.userId': req.user._id }, { __v: 0 });
+
+   res.status(StatusCodes.OK).json({
+      data: orders,
+   });
+});
